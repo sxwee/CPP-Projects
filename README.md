@@ -84,7 +84,7 @@
 
 ## 项目实现
 
-- [ ] 动态线程池
+- [x] [动态线程池](https://github.com/sxwee/CPP-Learning/tree/main/Projects/DynamicThreadPool)
 
 
 
