@@ -9,7 +9,7 @@
 ## CPP基础
 
 - 《Effective C++》
-  - [x] [第1章：自己习惯C++](./Reading-Notes/Effective%20C%2B%2B/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E8%87%AA%E5%B7%B1%E4%B9%A0%E6%83%AFC%2B%2B.md)
+  - [x] [第1章：自己习惯C++](./Basic/Effective%20C%2B%2B/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E8%87%AA%E5%B7%B1%E4%B9%A0%E6%83%AFC%2B%2B.md)
   - [ ] 第2章：构造、析构、赋值
   - [ ] 第3章：资源
   - [ ] 第4章：设计与声名
