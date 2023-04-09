@@ -1,4 +1,4 @@
-# 一.网络应用
+# 网络应用
 
 > Networked Applications
 
@@ -47,3 +47,35 @@ Skype提供语音、聊天和视频服务。与万维网在客户端和服务器
 **两端都位于NAT的情况**：通过**Relay服务器**解决，注意Relay不位于NAT后。位于NAT的客户端A和客户端B都会建立与Relay服务器的连接，当客户端A发送数据时，Relay服务器将该消息转发到其与客户端B建立的连接中。
 
 ![1-5-skype-2nat](./Images/1-5-skype-2nat.png)
+
+# 4层网络模型
+
+4层网络模型概览如下
+
+![1-6-four-layer-model](./Images/1-6-four-layer-model.png)
+
+**Link Layer（网络接口层）**：Internet由主机、交换机和路由器组成，数据需要在链路上逐跳传递。而Link Layer的工作便是在链路上传递数据包。
+
+**Network layer（网络层）**：负责将数据从一个设备传输到另一个设备（端到端）。网络层上的数据包称为packet，其包含了数据和IP（Internet Protocol）包头，其中包头描述了数据是什么，它要去哪里，它来自哪里。在网络层中必须使用IP协议，需要注意的是，**IP只是尽最大努力将报文发送给对端，但其并不承诺一定送达**。
+
+**Transport Layer（传输层）**：最常用的传输层协议为**TCP（Transmission Control Protocol）**，TCP确保发送的包正确地、有序地发送到对端，若网络层丢失了某些包，TCP层需要对丢失的包进行重传。但并不是所有应用都需要数据的正确传递。例如视频会议容许丢包，因此，并不是所有的应用都需要TCP。若应用不需要数据完全可靠的送达，可以使用更简单的**UDP（User Datagram Protocol）**，UDP不提供传输保证。
+
+**Application Layer（应用层）**：专注于为用户提供特定的功能（HTTP，FTP）。
+
+------
+
+在4层网络模型中，**每层都与其对同层进行通信，就好像每个层只与链路或互联网另一端的同一层进行通信，而不考虑下面的层如何将数据送到那里**。当应用层有数据要发送时，会将数据传递给传输层，传输层确保可靠（或不可靠）的数据传送，传输层会将数据传递给网络层，其会将数据切分为packets（只有使用UDP时才可能在网络层切分），然后给每个packet加上目的地址，最终packet被传递给网络接口层，其负责逐跳的传送数据。
+
+![1-7-full-four-layer-example](./Images/1-7-full-four-layer-example.png)
+
+------
+
+IP经常被叫做“**瘦腰（the thin waist）**”，因为若想使用Internet，必须使用IP协议，但其下的网络接口层和其上的传输层和应用层都有很多选项。
+
+![1-8-IP](./Images/1-8-IP.png)
+
+------
+
+OSI 7层网络模型与4层网络模型的对应关系
+
+![1-9-osi-model](./Images/1-9-osi-model.png)
