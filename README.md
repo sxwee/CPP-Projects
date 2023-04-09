@@ -61,7 +61,7 @@
   - [ ] 第13章：多种I/O函数
   - [ ] 第14章：多播和广播
 - 《CS144计算机网络介绍》（[视频地址](https://www.bilibili.com/video/BV137411Z7LR/?spm_id_from=333.1007.top_right_bar_window_custom_collection.content.click&vd_source=713c5c607fbae98ffec1214c1c7f3db3)）
-  - [ ] 第1章：Internet and IP
+  - [ ] [第1章：Internet and IP](./Network/CS144/第一章-Internet%20and%20IP.md)
   - [ ] 第2章：Transport
   - [ ] 第3章：Packet Switching
   - [ ] 第4章：Congestion Control
