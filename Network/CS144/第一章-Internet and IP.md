@@ -92,7 +92,7 @@ IP数据报（datagram）包含了包头和某些数据。当传输层有数据�
 
 IP服务模型的4大属性概况如下
 
-![1-10-IP-Service](C:\Users\wl\OldPC\GitRespository\CPP-Learning\Network\CS144\Images\1-10-IP-Service.png)
+![1-10-IP-Service](/Images/1-10-IP-Service.png)
 
 **数据报（Datagram）**：IP是数据报服务，当向IP请求发送数据时，其会创建一个数据报并将待发送的数据放入其中。数据报是根据其报头中的信息**通过网络单独路由**的packet，即数据报与数据报是相互独立的（self-contained）。报头会包含目的IP地址，每个路由器的转发选择都是基于目的IP，同时报头也包含了源IP地址，指示该数据报来自哪里，以便发送回复。数据报经过逐跳路由从源地址发送到目标地址。在每个路由器中，都包含了一个转发表，其指示了该数据包要向何处转发，才能被送至目标地址。
 
@@ -131,7 +131,7 @@ IP服务模型的4大属性概况如下
 
 IPv4数据报的header如下所示
 
-![1-11-IPv4-Datagram](C:\Users\wl\OldPC\GitRespository\CPP-Learning\Network\CS144\Images\1-11-IPv4-Datagram.png)
+![1-11-IPv4-Datagram](/Images/1-11-IPv4-Datagram.png)
 
 字段说明
 
