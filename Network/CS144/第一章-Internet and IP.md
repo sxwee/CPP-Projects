@@ -6,9 +6,7 @@
 
 网络应用的基本模型：两台主机各自在本地运行一个程序，程序通过网络来通信。
 
-<div style='float: center'>
 ![1-1-networked-application](./Images/1-1-networked-application.png)
-</div>
 
 最常用的通信模型使用**双向可靠字节流**，通信的两台主机可以想对方发送数据或读取对方发送过来的数据，双方也都可以主动断开连接。
 
