@@ -4,7 +4,7 @@
 
 动态线程池的示意图如下所示：
 
-<img src="images/framework.png" alt="framework" style="zoom:60%;" />
+<p align="center"><img src="images/framework.png" alt="framework" style="zoom:60%;" /></p>
 
 ------
 
