@@ -168,6 +168,24 @@ IPv4数据报的header如下所示
 
 > HTTP服务的TCP端口为80，HTTPS服务的TCP端口为443。
 
-源主机和目的主机之间可能隔着很多网络设备，
+源主机和目的主机之间可能隔着很多网络设备（路由器）。
 
 <p align="center"><img src="Images/1-13-inside-the-stream.png" alt="1-13-inside-the-stream"></p>
+
+当数据包到达路由器时，路由器会决定将其发往哪条链路。路由器也有IP地址，因此也有可能数据包并不会被转发，而是送到路由器自己的软件上（例如通过TCP登录到路由器上）。每个路由器上都有**转发表（forwarding table）**，路由器决策时的依据便是它。
+
+转发表包含一组IP地址模式和每个模式对应的链路。当数据包到达路由器时，路由器会选择最匹配的IP地址模式对应的链路进行转发。另外，每个路由器都有一个**默认路由（default）**，它与每个IP匹配，当一个数据包到达时、 没有比默认路由更具体的路由，路由器将只使用默认路由。
+
+<p align="center"><img src="Images/1-14-forwarding table.png" alt="1-14-forwarding table"></p>
+
+## 4.3 WireShark抓包
+
+在浏览器中输入`www.baidu.com`，使用WireShark抓包结果如下
+
+<p align="center"><img src="Images/1-15-wireshark-demo.png" alt="1-15-wireshark-demo"></p>
+
+## 4.4 `traceroute`命令的使用
+
+使用`traceroute`命令可以查看完数据包上传送的路径。
+
+<p align="center"><img src="Images/1-16-traceroute-demo.png" alt="1-16-traceroute-demo"></p>
