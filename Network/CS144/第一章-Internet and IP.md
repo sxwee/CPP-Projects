@@ -4,7 +4,7 @@
 
 网络应用可以在世界范围内交换数据，例如你可以通过浏览器读取出版社服务器提供的文章。网络应用的基本模型：两台主机各自在本地运行一个程序，程序通过网络来通信。
 
-![1-1-networked-application](./Images/1-1-networked-application.png)
+<p align="center"><img src="./Images/1-1-networked-application.png" alt="1-1-networked-application"></p>
 
 最常用的通信模型使用**双向可靠字节流**，通信的两台主机可以想对方发送数据或读取对方发送过来的数据，双方也都可以主动断开连接。
 
@@ -24,7 +24,7 @@ BitTorrent将文件切分成**块（pieces）**，当一个客户端从另一个
 
 与WWW一样，BitTorrent同样使用可靠、双向的数据流，但它更为复杂。当一个客户端想下载一个文件，其首先需要找到称之为torrent文件，该文件描述了你想要下载的文件的某些信息。它还告诉BitTorrent谁是该 torrent 的**跟踪器（Tracker）**。跟踪者记录了谁是集群的成员。为了加入一个torrent，客户端首先需要与tracker通信，请求集群的客户端列表。然后客户端本地与客户端列表的某些建立连接并请求数据。反过来，这些客户端同样也可以向本地客户端请求文件。此外，当有新客户端加入集群时，tracker会告知本地客户端。
 
-![1-2-bittorrent](./Images/1-2-bittorrent.png)
+<p align="center"><img src="./Images/1-2-bittorrent.png" alt="1-2-bittorrent"></p>
 
 ------
 
@@ -32,7 +32,7 @@ BitTorrent将文件切分成**块（pieces）**，当一个客户端从另一个
 
 Skype提供语音、聊天和视频服务。与万维网在客户端和服务器间建立连接通信不同，Skype是在两台客户端间建立连接（个人PC）。例如下图，两台客户端建立连接然后就可以进行双向的数据交换。
 
-![1-3-skype](./Images/1-3-skype.png)
+<p align="center"><img src="./Images/1-3-skype.png" alt="1-3-skype"></p>
 
 但当引入NAT（Network Address Translator，网络地址转换器）之后，两台客户端通过Skype通信将有所不同。
 
@@ -40,11 +40,11 @@ Skype提供语音、聊天和视频服务。与万维网在客户端和服务器
 
 **只有一端有NAT的情况**：通过**Rendezvous服务器**来解决。当登录到Skype，客户端B会建立与Rendezvous服务器的连接（NAT后的主机可以打开与Internet节点的连接），因此当客户端A呼叫客户端B时，它将发送消息给Rendezvous服务器。客户端B上弹出呼叫对话框。若客户端B接受了呼叫，其会主动建立与客户端A的连接。
 
-![1-4-skype-1nat](./Images/1-4-skype-1nat.png)
+<p align="center"><img src="./Images/1-4-skype-1nat.png" alt="1-4-skype-1nat"></p>
 
 **两端都位于NAT的情况**：通过**Relay服务器**解决，注意Relay不位于NAT后。位于NAT的客户端A和客户端B都会建立与Relay服务器的连接，当客户端A发送数据时，Relay服务器将该消息转发到其与客户端B建立的连接中。
 
-![1-5-skype-2nat](./Images/1-5-skype-2nat.png)
+<p align="center"><img src="./Images/1-5-skype-2nat.png" alt="1-5-skype-2nat"></p>
 
 # 2.四层网络模型
 
@@ -52,7 +52,7 @@ Skype提供语音、聊天和视频服务。与万维网在客户端和服务器
 
 4层网络模型概览如下
 
-![1-6-four-layer-model](./Images/1-6-four-layer-model.png)
+<p align="center"><img src="./Images/1-6-four-layer-model.png" alt="1-6-four-layer-model"></p>
 
 **Link Layer（网络接口层）**：Internet由主机、交换机和路由器组成，数据需要在链路上逐跳传递。而Link Layer的工作便是在链路上传递数据包。
 
@@ -66,7 +66,7 @@ Skype提供语音、聊天和视频服务。与万维网在客户端和服务器
 
 在4层网络模型中，**每层都与其对同层进行通信，就好像每个层只与链路或互联网另一端的同一层进行通信，而不考虑下面的层如何将数据送到那里**。当应用层有数据要发送时，会将数据传递给传输层，传输层确保可靠（或不可靠）的数据传送，传输层会将数据传递给网络层，其会将数据切分为packets（只有使用UDP时才可能在网络层切分），然后给每个packet加上目的地址，最终packet被传递给网络接口层，其负责逐跳的传送数据。
 
-![1-7-full-four-layer-example](./Images/1-7-full-four-layer-example.png)
+<p align="center"><img src="./Images/1-7-full-four-layer-example.png" alt="1-7-full-four-layer-example"></p>
 
 ------
 
@@ -74,13 +74,13 @@ Skype提供语音、聊天和视频服务。与万维网在客户端和服务器
 
 IP经常被叫做“**瘦腰（the thin waist）**”，因为若想使用Internet，必须使用IP协议，但其下的网络接口层和其上的传输层和应用层都有很多选项。
 
-![1-8-IP](./Images/1-8-IP.png)
+<p align="center"><img src="./Images/1-8-IP.png" alt="1-8-IP"></p>
 
 ## 2.3 OSI 七层网络模型
 
 OSI 7层网络模型与4层网络模型的对应关系
 
-![1-9-osi-model](./Images/1-9-osi-model.png)
+<p align="center"><img src="./Images/1-9-osi-model.png" alt="1-9-osi-model"></p>
 
 # 3.IP服务
 
@@ -92,7 +92,7 @@ IP数据报（datagram）包含了包头和某些数据。当传输层有数据�
 
 IP服务模型的4大属性概况如下
 
-![1-10-IP-Service](./Images/1-10-IP-Service.png)
+<p align="center"><img src="./Images/1-10-IP-Service.png" alt="1-10-IP-Service"></p>
 
 **数据报（Datagram）**：IP是数据报服务，当向IP请求发送数据时，其会创建一个数据报并将待发送的数据放入其中。数据报是根据其报头中的信息**通过网络单独路由**的packet，即数据报与数据报是相互独立的（self-contained）。报头会包含目的IP地址，每个路由器的转发选择都是基于目的IP，同时报头也包含了源IP地址，指示该数据报来自哪里，以便发送回复。数据报经过逐跳路由从源地址发送到目标地址。在每个路由器中，都包含了一个转发表，其指示了该数据包要向何处转发，才能被送至目标地址。
 
@@ -131,7 +131,7 @@ IP服务模型的4大属性概况如下
 
 IPv4数据报的header如下所示
 
-![1-11-IPv4-Datagram](./Images/1-11-IPv4-Datagram.png)
+<p align="center"><img src="./Images/1-11-IPv4-Datagram.png" alt="1-11-IPv4-Datagram"></p>
 
 字段说明
 
@@ -148,3 +148,26 @@ IPv4数据报的header如下所示
 | Header Length                     | 指示头部的长度，因为可能会添加额外的选项字段                 |
 | Checksum                          | 用来对报头进行校验，以便在报头被破坏时，不将数据包送到错误的目的地 |
 
+# 4.数据包的生命周期
+
+## 4.1 传输层
+
+几乎所有的网络流量都是通过TCP进行传输的，建立TCP连接首先需要三次握手。
+
+<p align="center"><img src="C:\Users\wl\OldPC\GitRespository\CPP-Learning\Network\CS144\Images\1-12-three-way-handshake.png" alt="1-12-three-way-handshake"></p>
+
+**第一次握手**：客户端发送SYN请求（请求同步自己的序列号）。
+
+**第二次握手**：客户端回复SYN-ACK（确认客户端的序列号，并请求同步自己的序列号）。
+
+**第三次握手**：客户端回复ACK（确认服务端的序列号）。
+
+## 4.2 网络层
+
+网络层负责将数据包发送到对端主机，要达到这一目的，其需要知道两个IP地址，即源IP和目的IP。通过目的IP可以将数据包发送到目的主机，然后根据TCP端口来将数据包发送给对应的应用程序。
+
+> HTTP服务的TCP端口为80，HTTPS服务的TCP端口为443。
+
+源主机和目的主机之间可能隔着很多网络设备，
+
+<p align="center"><img src="Images/1-13-inside-the-stream.png" alt="1-13-inside-the-stream"></p>
