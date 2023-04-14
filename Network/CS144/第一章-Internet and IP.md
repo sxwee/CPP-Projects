@@ -154,7 +154,7 @@ IPv4数据报的header如下所示
 
 几乎所有的网络流量都是通过TCP进行传输的，建立TCP连接首先需要三次握手。
 
-<p align="center"><img src="C:\Users\wl\OldPC\GitRespository\CPP-Learning\Network\CS144\Images\1-12-three-way-handshake.png" alt="1-12-three-way-handshake"></p>
+<p align="center"><img src="Images/1-12-three-way-handshake.png" alt="1-12-three-way-handshake"></p>
 
 **第一次握手**：客户端发送SYN请求（请求同步自己的序列号）。
 
