@@ -220,3 +220,86 @@ IPv4数据报的header如下所示
 - **持续的改进**
 - **对等通信（peer-to-peer）**：分层通信系统特有的好处，每层都与对方对等的层进行通信。
 
+# 7.封装准则
+
+**封装（Encapsulation）**是一种准则，通过它可以将信息组织在数据包中，以便于维护分层结构，同时让它们共享数据包的内容。
+
+数据包封装示意图如下：
+
+<p align="center"><img src="Images/1-17-encapsulation.png" alt="1-17-encapsulation"></p>
+
+**注意**：在上述数据包的封装中还包含了**包尾（footer）**，但在大多数情况下是没有包尾的，也有些特定的网络协议可能会在数据包的末尾添加一些特定的字段或者校验码作为包尾，以用于数据完整性校验和错误检测等目的。
+
+> 举例：假设您正在使用通过WiFi连接的计算机浏览网络。您的Web浏览器生成一个HTTP GET请求。该HTTP GET请求是TCP段的**有效载荷（payload）**。封装HTTP GET的TCP段是IP数据包的有效载荷。封装TCP段和HTTP GET的IP数据包是WiFi帧的有效载荷。
+
+# 8.网络字节序
+
+对于计算机通信，需要商定消息有那些字段以及消息的格式。为了生成要发送的信息，软件通常要在内存中创建一个副本，然后将其传递给网卡。同样，当计算机收到一条信息时，网卡会将该信息放在内存中，然后软件就可以访问它。
+
+在计算机中，**不同的处理器采用不同的方式表示多字节数据**。主要包含两种：
+
+- **大端序（big endian）**：最大有效字节位于最低地址。
+- **小端序（little endian）**：最小有效字节位于最低地址。
+
+例如对于`1024=0x0400`，其对应的大端序表示和小端序表示如下
+
+```
+// 大端序
+0x04 0x00
+// 小端序
+0x00 0x04
+```
+
+为了需要在不同主机上进行通信，需要对传输的多字节数据的表示格式进行统一，实际上**网络字节序采用的是大端序**。
+
+通过下述示例可以判断主机上采用的是大端序还是小端序。
+
+```c
+#include <stdio.h>
+#include <arpa/inet.h>
+
+int main()
+{
+	uint16_t val = 0x0400;
+	uint8_t *ptr = (uint8_t *)&val;
+	if (ptr[0] == 0x40)
+	{
+		printf("big endian\n");
+	}
+	else if (ptr[1] == 0x04)
+	{
+		printf("little endian\n");
+	}
+	else
+	{
+		printf("unknow endianess!\n");
+	}
+	// little endian
+	return 0;
+}
+```
+
+> 主机是ARM处理器，为小端序。
+
+实际上，C语言提供了一系列API来完成**主机序和网络序（大端序）的转换**，包括`htons()`、`ntohs()`、`htonl()`和`ntohl()`等，其中`htons`的含义是`host to network short`，`ntohl`的含义是`network to host long`，使用示例如下：
+
+```cpp
+#include <stdio.h>
+#include <arpa/inet.h>
+
+int main()
+{
+	uint16_t val = 0x0400;
+    // 由主机序转换为网络序: 小端序->大端序
+	uint16_t network_val = htons(val);
+	uint8_t *ptr = (uint8_t *)&network_val;
+	printf("%x %x\n", ptr[0], ptr[1]);
+	// 4 0
+	return 0;
+}
+```
+
+> 操作网络数据时一定要注意主机序和网络序的转换！！！
+
+
+
