@@ -133,17 +133,17 @@ ICMP（Internet Control Message Protocol）主要用于**在IP网络中传输控
 
 ICMP运行在网络层之上，因此严格来说，它是一个**传输层协议**。当对端主机或路由器要使用ICMP报告错误时，它会将想要发送回源的消息放入ICMP payload中，然后将其传递给IP。
 
-![2-10-ICMP-above-IP](Images/2-10-ICMP-above-IP.png)
+<p align="center"><img src="Images/2-10-ICMP-above-IP.png" alt="2-10-ICMP-above-IP"></p>
 
 下面是一个例子，假定源主机有一个客户端应用程序要访问HTTP服务器，其递交的数据回依次由TCP层、Network层和Link层处理后，沿着链路出去到达路由器，但是路由器的转发表中没有关于目标网络的任何信息，使得路由器不知道如何转发，若发生这种情况，路由器将发送回一条消息给A告知其目标网络不可达。
 
-![2-11-ICMP-example](Images/2-11-ICMP-example.png)
+<p align="center"><img src="Images/2-11-ICMP-example.png" alt="2-11-ICMP-example"></p>
 
 ## 3.1 ICMP服务
 
 ICMP服务属性总结如下表
 
-![2-12-ICMP-Service-Model](Images/2-12-ICMP-Service-Model.png)
+<p align="center"><img src="Images/2-12-ICMP-Service-Model.png" alt="2-12-ICMP-Service-Model"></p>
 
 ICMP允许**报告自包含的错误消息**，当然从发送简单数据报的意义上说，这是**不可靠**的。
 
@@ -151,7 +151,7 @@ ICMP允许**报告自包含的错误消息**，当然从发送简单数据报的
 
 常见的ICMP消息类型总结如下
 
-![2-13-ICMP-Message-Types](Images/2-13-ICMP-Message-Types.png)
+<p align="center"><img src="Images/2-13-ICMP-Message-Types.png" alt="2-13-ICMP-Message-Types"></p>
 
 ## 3.3 `ping`的工作原理
 
@@ -163,7 +163,7 @@ ICMP允许**报告自包含的错误消息**，当然从发送简单数据报的
 - 发送端还可以通过ICMP消息中的TTL字段来检测到达目标主机所需要的路由跳数。在每个路由器上，TTL值都会减少1，如果TTL被减少到0，则路由器将丢弃该消息，并向发送方发送一个ICMP Time Exceeded消息。
 - 通过多次执行上述步骤，可以得出平均往返时间和丢包率等网络质量指标，以评估网络的稳定性和可靠性。
 
-![2-14-ping-example](Images/2-14-ping-example.png)
+<p align="center"><img src="Images/2-14-ping-example.png" alt="2-14-ping-example"></p>
 
 ## 3.4 `traceroute`的工作原理
 
@@ -176,7 +176,7 @@ ICMP允许**报告自包含的错误消息**，当然从发送简单数据报的
 - 然后源主机继续发送UDP数据包，将TTL设置为2，当到达第二个路由器时，TTL减为0，同样回传错误消息。
 - 重复上述步骤，直至到达目标主机，由于UDP数据包会选择一个目标主机不会知道的端口，以便目标主机发回消息ICMP port unreachable。
 
-![2-15-traceroute-example](Images/2-15-traceroute-example.png)
+<p align="center"><img src="Images/2-15-traceroute-example.png" alt="2-15-traceroute-example"></p>
 
 # 4 端到端准则
 
