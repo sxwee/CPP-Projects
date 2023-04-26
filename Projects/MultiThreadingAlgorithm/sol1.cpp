@@ -15,7 +15,7 @@ void func(int num)
     for (int i = 0; i < 50; ++i)
     {
         unique_lock<mutex> lk(count_mtx);
-        cv.wait(lk, [=]() { return flag != num; });
+        cv.wait(lk, [=]() { return flag == num; });
         for (int j = 0; j < num;++j)
             cout << j << " ";
         cout << endl;
