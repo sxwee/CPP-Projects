@@ -98,4 +98,4 @@
 ## 面经
 
 - [面经汇总](Interview.md)
-- [多线程算法题实现](Projects/MultiThreadingAlgorithm/多线程算法实现.md)
+- [多线程算法题实现](Projects/MultiThreadingAlgorithm)
