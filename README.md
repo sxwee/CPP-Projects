@@ -62,7 +62,7 @@
   - [ ] 第14章：多播和广播
 - 《CS144计算机网络介绍》（[视频地址](https://www.bilibili.com/video/BV137411Z7LR/?spm_id_from=333.1007.top_right_bar_window_custom_collection.content.click&vd_source=713c5c607fbae98ffec1214c1c7f3db3)）
   - [x] [第1章：Internet and IP](./Network/CS144/第1章-Internet%20and%20IP.md)
-  - [ ] [第2章：Transport](./Network/CS144/第2章-Transport%20Layer.md)
+  - [x] [第2章：Transport](./Network/CS144/第2章-Transport%20Layer.md)
   - [ ] 第3章：Packet Switching
   - [ ] 第4章：Congestion Control
   - [ ] 第5章：Application and NATs
