@@ -95,6 +95,7 @@
 
 - [x] [动态线程池](./Projects/DynamicThreadPool)
 - [x] [Web Bench源码剖析](./Projects/WebBench)
+- [x] [Web Server](./Projects/WebServer)
 
 ## 面经
 
