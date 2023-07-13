@@ -98,7 +98,7 @@ bool threadPool<T>::append_p(T *request)
 template <typename T>
 void *threadPool<T>::worker(void *arg)
 {
-    threadpool *pool = (threadpool *)arg;
+    threadPool *pool = (threadPool *)arg;
     pool->run();
     return pool;
 }

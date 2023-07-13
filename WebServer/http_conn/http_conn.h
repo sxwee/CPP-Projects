@@ -98,8 +98,8 @@ public:
     };
 
 public:
-    httpConn();
-    ~httpConn();
+    httpConn(){}
+    ~httpConn(){}
 
 public:
     void init(int sockfd, const sockaddr_in &addr, char *root, int trig_mode, int close_log,
