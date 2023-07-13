@@ -11,6 +11,12 @@ const char *error_404_form = "The requested file was not found on this server.\n
 const char *error_500_title = "Internal Error";
 const char *error_500_form = "There was an unusual problem serving the request file.\n";
 
+// 所有的客户数
+int httpConn::m_user_count = 0;
+// 所有socket上的事件都被注册到同一个epoll内核事件中，所以设置成静态的
+int httpConn::m_epollfd = -1;
+unordered_map<string, string> httpConn::m_users = {};
+
 void httpConn::init_mysql_result(connectPool *conn_pool)
 {
     // 从连接池中取一个连接
@@ -18,7 +24,7 @@ void httpConn::init_mysql_result(connectPool *conn_pool)
     connectionRAII mysqlcon(&mysql, conn_pool);
 
     // 在user表中检索username，passwd数据，浏览器端输入
-    if (mysql_query(mysql, "SELECT username,passwd FROM user"))
+    if (mysql_query(mysql, "SELECT username,password FROM user"))
     {
         LOG_ERROR("SELECT error:%s\n", mysql_error(mysql));
     }
@@ -97,10 +103,6 @@ void modfd(int epollfd, int fd, int ev, int trig_mode)
     epoll_ctl(epollfd, EPOLL_CTL_MOD, fd, &event);
 }
 
-// 所有的客户数
-int httpConn::m_user_count = 0;
-// 所有socket上的事件都被注册到同一个epoll内核事件中，所以设置成静态的
-int httpConn::m_epollfd = -1;
 
 /**
  * 关闭连接，关闭一个连接，客户总量减一
@@ -467,19 +469,17 @@ httpConn::HTTP_CODE httpConn::do_request()
         for (i = i + 10; m_string[i] != '\0'; ++i, ++j)
             password[j] = m_string[i];
         password[j] = '\0';
-
         if (*(p + 1) == '3')
         {
             // 如果是注册，先检测数据库中是否有重名的
             // 没有重名的，进行增加数据
             char *sql_insert = new char[200];
-            strcpy(sql_insert, "INSERT INTO user(username, passwd) VALUES(");
+            strcpy(sql_insert, "INSERT INTO user(username, password) VALUES(");
             strcat(sql_insert, "'");
             strcat(sql_insert, name);
             strcat(sql_insert, "', '");
             strcat(sql_insert, password);
             strcat(sql_insert, "')");
-
             if (m_users.find(name) == m_users.end())
             {
                 m_lock.lock();
@@ -500,7 +500,7 @@ httpConn::HTTP_CODE httpConn::do_request()
         // 若浏览器端输入的用户名和密码在表中可以查找到，返回1，否则返回0
         else if (*(p + 1) == '2')
         {
-            if (m_users.find(name) != m_users.end() && m_users[name] == password)
+            if (m_users.count(name) && m_users[name] == password)
                 strcpy(m_url, "/welcome.html");
             else
                 strcpy(m_url, "/logError.html");

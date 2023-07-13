@@ -28,7 +28,9 @@
 #include "../timer/lst_timer.h"
 #include "../lock/locker.h"
 
-using std::unordered_map, std::string, std::pair;
+using std::string;
+using std::unordered_map;
+using std::pair;
 
 class httpConn
 {
@@ -143,6 +145,7 @@ private:
 public:
     static int m_epollfd;    // 所有socket上的事件都被注册到同一个epoll内核事件中，所以设置成静态的
     static int m_user_count; // 统计用户的数量
+    static unordered_map<string, string> m_users; // <用户名, 密码>
     MYSQL *mysql;            // MySQL连接
     int m_state;             // 读为0, 写为1
 
@@ -179,7 +182,6 @@ private:
 
     char *doc_root; // 网站根目录
 
-    unordered_map<string, string> m_users; // <用户名, 密码>
     locker m_lock;
     int m_trig_mode;
     int m_close_log;

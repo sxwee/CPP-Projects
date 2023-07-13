@@ -7,7 +7,8 @@
 
 #include "../log/log.h"
 
-using std::string, std::list;
+using std::string;
+using std::list;
 
 class connectPool
 {

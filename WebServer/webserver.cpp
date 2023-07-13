@@ -26,6 +26,7 @@ void WebServer::init(int port, string user, string pwd, string db_name, int log_
 {
     m_port = port;
     m_user = user;
+    m_pwd = pwd;
     m_db_name = db_name;
     m_log_write = log_write;
     m_opt_linger = opt_linger;
@@ -51,7 +52,7 @@ void WebServer::set_db_pool()
 {
     // 初始化数据库连接池
     m_conn_pool = connectPool::get_instance();
-    m_conn_pool->init("localhost", m_user, m_pwd, m_db_name, 3306, m_sql_num, m_close_log);
+    m_conn_pool->init("127.0.0.1", m_user, m_pwd, m_db_name, 3306, m_sql_num, m_close_log);
 
     // 初始化数据库用户和密码
     users->init_mysql_result(m_conn_pool);
