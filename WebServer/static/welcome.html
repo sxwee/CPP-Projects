@@ -1,27 +1,94 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>WebServer</title>
-    </head>
-    <body>
-    <br/>
-    <br/>
-    <div align="center"><font size="5"> <strong>是时候做出选择了</strong></font></div>
-	<br/>
-		<br/>
-		<form action="5" method="post">
- 			<div align="center"><button type="submit">xxx.jpg</button></div>
-                </form>
-		<br/>
-                <form action="6" method="post">
-                        <div align="center"><button type="submit" >xxx.avi</button></div>
-                </form>
-		<br/>
-		<form action="7" method="post">
- 			<div align="center"><button type="submit">关注我</button></div>
-                </form>
-		
-        </div>
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <title>WebServer</title>
+    <style type="text/css">
+        html,
+        body {
+            background-image: url(./resources/main_page.jpg);
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            padding: 0;
+            margin: 0;
+        }
+
+        #title {
+            width: 100%;
+            height: 40%;
+        }
+
+        #functions {
+            width: 100%;
+            height: 60%;
+        }
+
+        #index_title {
+            font-family: SimSun, 'Times New Roman', Times, serif;
+            font-size: 80px;
+            font-weight: bolder;
+            color: aqua;
+            text-align: center;
+        }
+
+
+        #left_block {
+            float: left;
+            width: 33%;
+            height: 100%;
+        }
+
+        #mid_block {
+            float: left;
+            width: 34%;
+            height: 100%;
+        }
+
+        #right_block {
+            float: left;
+            width: 33%;
+            height: 100%;
+        }
+
+        #check_picture,
+        #check_video,
+        #follow_me {
+            width: 200px;
+            height: 200px;
+            font-family: SimSun, 'Times New Roman', Times, serif;
+            font-weight: bolder;
+            font-size: 40px;
+            background: transparent;
+            color: aqua;
+        }
+    </style>
+</head>
+
+<body>
+    <div align="center" id="title">
+        <font id="index_title"> 系统功能 </font>
+    </div>
+    <div id="functions">
+        <form action="5" method="post" id="left_block">
+            <div align="center">
+                <button type="submit" id="check_picture">查看图片</button>
+            </div>
+        </form>
+        <form action="6" method="post" id="mid_block">
+            <div align="center">
+                <button type="submit" id="check_video">观看视频</button>
+            </div>
+        </form>
+        <form action="7" method="post" id="right_block">
+            <div align="center">
+                <button type="submit" id="follow_me">修改密码</button>
+            </div>
+        </form>
+    </div>
+
+    </div>
+</body>
+
 </html>

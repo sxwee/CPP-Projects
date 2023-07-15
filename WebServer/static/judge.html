@@ -1,26 +1,80 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>WebServer</title>
-    </head>
-    <body>
-    <br/>
-    <br/>
-    <div align="center"><font size="5"> <strong>欢迎访问</strong></font></div>
-	<br/>
-		<br/>
-		<form action="0" method="post">
- 			<div align="center"><button type="submit">新用户</button></div>
-                </form>
-		<br/>
-                <form action="1" method="post">
-                        <div align="center"><button type="submit" >已有账号</button></div>
-                </form>
-		
-		
-        </div>
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <title>WebServer</title>
+    <style type="text/css">
+        html,
+        body {
+            background-image: url(./resources/main_page.jpg);
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            padding: 0;
+            margin: 0;
+        }
+
+        #index_title {
+            font-family: SimSun;
+            font-size: 80px;
+            font-weight: bolder;
+            color: aqua;
+            text-align: center;
+        }
+
+        #title {
+            width: 100%;
+            height: 40%;
+        }
+
+        #options {
+            width: 100%;
+            height: 60%;
+
+        }
+
+        #new_user {
+            float: left;
+            width: 50%;
+            height: 100%;
+        }
+
+        #login {
+            float: right;
+            width: 50%;
+            height: 100%;
+        }
+
+        #btn_new,
+        #btn_old {
+            background: transparent;
+            width: 180px;
+            height: 180px;
+            font-family: SimSun;
+            font-size: 50px;
+            font-weight: bolder;
+            color: aqua;
+        }
+    </style>
+</head>
+
+<body>
+    <div align="center" id="title">
+        <font id="index_title"> <strong>欢迎访问我的服务器</strong></font>
+    </div>
+    <div id="options">
+        <form action="0" method="post" id="new_user">
+            <div align="center">
+                <button type="submit" id="btn_new">注册</button>
+            </div>
+        </form>
+        <form action="1" method="post" id="login">
+            <div align="center">
+                <button type="submit" id="btn_old">登录</button>
+            </div>
+        </form>
+    </div>
+</body>
+
 </html>
-
-

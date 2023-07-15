@@ -1,17 +1,39 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>awsl</title>
-    </head>
-    <body><br/>
-<br/>
-<div align="center"><font size="5"> <strong>你居然想看视频，不想关注我</strong></font></div>
-<br/>
 
-<br/>
-<br/>
-<div align="center"><video width="906" height="506" controls>
-    <source src="xxx.mp4" type="video/mp4">
-</video></div>
+<head>
+    <meta charset="UTF-8">
+    <title>Picture</title>
+    <style type="text/css">
+        #title {
+            width: 100%;
+            height: 20%;
+            font-family: SimSun, 'Times New Roman', Times, serif;
+            font-weight: bolder;
+            font-size: 50px;
+            margin: 20px;
+        }
+
+        #content {
+            width: 100%;
+            height: 20%;
+        }
+
+        #player{
+            width: 60%;
+            height: 40%;
+        }
+    </style>
+</head>
+
+<body>
+    <div align="center" id="title">
+        <font> 视频欣赏</font>
+    </div>
+    <div align="center" id="content">
+        <video controls id="player">
+            <source src="./resources/xxx.mp4" type="video/mp4">
+        </video>
+    </div>
+
 </html>

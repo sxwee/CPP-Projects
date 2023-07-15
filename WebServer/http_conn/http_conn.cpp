@@ -15,6 +15,7 @@ const char *error_500_form = "There was an unusual problem serving the request f
 int httpConn::m_user_count = 0;
 // 所有socket上的事件都被注册到同一个epoll内核事件中，所以设置成静态的
 int httpConn::m_epollfd = -1;
+string httpConn::cur_user_name = "";
 unordered_map<string, string> httpConn::m_users = {};
 
 void httpConn::init_mysql_result(connectPool *conn_pool)
@@ -102,7 +103,6 @@ void modfd(int epollfd, int fd, int ev, int trig_mode)
 
     epoll_ctl(epollfd, EPOLL_CTL_MOD, fd, &event);
 }
-
 
 /**
  * 关闭连接，关闭一个连接，客户总量减一
@@ -445,10 +445,10 @@ httpConn::HTTP_CODE httpConn::do_request()
     const char *p = strrchr(m_url, '/');
 
     // 处理cgi
-    if (cgi == 1 && (*(p + 1) == '2' || *(p + 1) == '3'))
+    if (cgi == 1 && (*(p + 1) == '2' || *(p + 1) == '3' || *(p + 1) == '8'))
     {
 
-        // 根据标志判断是登录检测还是注册检测
+        // 根据标志判断是登录检测还是注册检测还是修改
         char flag = m_url[1];
 
         char *m_url_real = new char[200];
@@ -464,7 +464,6 @@ httpConn::HTTP_CODE httpConn::do_request()
         for (i = 5; m_string[i] != '&'; ++i)
             name[i - 5] = m_string[i];
         name[i - 5] = '\0';
-
         int j = 0;
         for (i = i + 10; m_string[i] != '\0'; ++i, ++j)
             password[j] = m_string[i];
@@ -501,9 +500,42 @@ httpConn::HTTP_CODE httpConn::do_request()
         else if (*(p + 1) == '2')
         {
             if (m_users.count(name) && m_users[name] == password)
+            {
+                cur_user_name = name; // 登录的时候获取当前的用户名
                 strcpy(m_url, "/welcome.html");
+            }
             else
                 strcpy(m_url, "/logError.html");
+        }
+        else if (*(p + 1) == '8')
+        {
+            char *sql_update = new char[200];
+            strcpy(sql_update, "UPDATE user SET password = ");
+            strcat(sql_update, "'");
+            strcat(sql_update, password);
+            strcat(sql_update, "'");
+            strcat(sql_update, " WHERE username = ");
+            strcat(sql_update, "'");
+            strcat(sql_update, name);
+            strcat(sql_update, "'");
+            // 当前登录的用户只能更改当前的密码
+            if (cur_user_name != name)
+            {
+                strcpy(m_url, "/changeForbidden.html");
+            }
+            else
+            {
+                m_lock.lock();
+                int res = mysql_query(mysql, sql_update);
+                m_users[name] = password;
+                m_lock.unlock();
+
+                if (!res)
+                    strcpy(m_url, "/changeSuccess.html");
+                else
+                    strcpy(m_url, "/changeFailure.html");
+            }
+            delete[] sql_update;
         }
     }
 
@@ -542,7 +574,7 @@ httpConn::HTTP_CODE httpConn::do_request()
     else if (*(p + 1) == '7')
     {
         char *m_url_real = new char[200];
-        strcpy(m_url_real, "/fans.html");
+        strcpy(m_url_real, "/change.html");
         strncpy(m_real_file + len, m_url_real, strlen(m_url_real));
 
         delete m_url_real;
@@ -797,7 +829,7 @@ bool httpConn::process_write(HTTP_CODE ret)
 
 /**
  * 由线程池中的工作线程调用，处理HTTP请求的入口函数
-*/
+ */
 void httpConn::process()
 {
     HTTP_CODE read_ret = process_read();

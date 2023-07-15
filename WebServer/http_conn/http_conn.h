@@ -28,9 +28,9 @@
 #include "../timer/lst_timer.h"
 #include "../lock/locker.h"
 
+using std::pair;
 using std::string;
 using std::unordered_map;
-using std::pair;
 
 class httpConn
 {
@@ -100,8 +100,8 @@ public:
     };
 
 public:
-    httpConn(){}
-    ~httpConn(){}
+    httpConn() {}
+    ~httpConn() {}
 
 public:
     void init(int sockfd, const sockaddr_in &addr, char *root, int trig_mode, int close_log,
@@ -143,11 +143,12 @@ private:
     bool add_blank_line();
 
 public:
-    static int m_epollfd;    // 所有socket上的事件都被注册到同一个epoll内核事件中，所以设置成静态的
-    static int m_user_count; // 统计用户的数量
+    static int m_epollfd;                         // 所有socket上的事件都被注册到同一个epoll内核事件中，所以设置成静态的
+    static int m_user_count;                      // 统计用户的数量
     static unordered_map<string, string> m_users; // <用户名, 密码>
-    MYSQL *mysql;            // MySQL连接
-    int m_state;             // 读为0, 写为1
+    static string cur_user_name;                         // 当前登录的用户名
+    MYSQL *mysql;                                 // MySQL连接
+    int m_state;                                  // 读为0, 写为1
 
 private:
     int m_sockfd; // 连接对应的套接字
