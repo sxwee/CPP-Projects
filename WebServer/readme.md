@@ -37,7 +37,54 @@ MySQL: 5.7.42
 
 ## 系统运行
 
+**步骤1**：在MySQL数据库中创建用户密码存储表：
 
+```sql
+// 建库
+CREATE DATABASE web_service;
+
+// 创建user表
+USE web_service;
+CREATE TABLE user(
+    username char(50) NULL,
+    password char(50) NULL
+);
+```
+
+**步骤2**：修改`main.cpp`中的数据库初始化信息：
+
+```c++
+string user = "your_user_name";
+string passwd = "your_user_password";
+string databasename = "web_service";
+```
+
+**步骤3**：编译运行：
+
+```shell
+make
+```
+
+**步骤4**：启动服务器:
+
+```shell
+./server [-p port] [-l LOGWrite] [-m TRIGMode] [-o OPT_LINGER] [-s sql_num] [-t thread_num] [-c close_log] [-a actor_model]
+```
+
+参数说明：
+
+| 参数 | 参数说明                                                     |
+| ---- | ------------------------------------------------------------ |
+| `-p` | 自定义端口号，默认为`9006`                                   |
+| `-l` | 选择日志写入方式，默认同步写入`0`，可用选项为：`0: 同步写入 1: 异步写入` |
+| `-m` | `listenfd`（监听套接字）和`connfd`（连接套接字）的模式组合，默认`LT+LT`<br>可用选项为：`0: LT + LT 1: LT + ET 2: ET+ LT 3: ET + ET` |
+| `-o` | 优雅关闭连接，默认不使用`0`。可用选项为`0: 不适用 1: 使用`   |
+| `-s` | 数据库连接池的连接数，默认为`8`                              |
+| `-t` | 线程池线程数，默认为`8`                                      |
+| `-c` | 是否打开日志，默认打开`0`。可用选项为`0: 打开日志 1: 关闭日志` |
+| `-a` | 高性能网络模式选择，默认为`0`，可用选项为`0: Proactor 1: Reactor` |
+
+**说明**：在运行上述命令后，便可以经`your_id:your_port`在浏览器中请求服务。
 
 ## 功能展示
 
