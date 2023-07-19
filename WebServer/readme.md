@@ -24,12 +24,12 @@ MySQL: 5.7.42
 **项目各模块详解**：
 
 - [线程同步机制包装类](./lock/readme.md)
-- [HTTP连接请求处理类](./thread_pool/readme.md)
-- 事务处理线程池
-- 定时器处理非活动连接
-- 同步/异步日志系统
-- 数据库连接池
-- HTTP压力测试
+- [HTTP连接请求处理类](./http/readme.md)
+- [事务处理线程池](./thread_pool/readme.md)
+- [定时器处理非活动连接](./timer/readme.md)
+- [同步/异步日志系统](./log/readme.md)
+- [数据库连接池](./db/readme.md)
+- [HTTP压力测试](./webbench/readme.md)
 
 
 
