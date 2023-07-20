@@ -38,7 +38,7 @@ public:
     static const int FILENAME_LEN = 200;       // 文件名的最大长度
     static const int READ_BUFFER_SIZE = 2048;  // 读缓冲区的大小
     static const int WRITE_BUFFER_SIZE = 1024; // 写缓冲区的大小
-    // HTTP请求方法
+    // HTTP请求方法, 本项目只实现了GET和POST请求
     enum METHOD
     {
         GET = 0,
@@ -159,7 +159,7 @@ private:
     int m_start_line;                  // 当前正在解析的行的起始位置
 
     char m_write_buf[WRITE_BUFFER_SIZE]; // 写缓冲区
-    int m_write_idx;                     // 写缓冲区中待发送的字节数
+    int m_write_idx;                     // 指示写缓冲区的长度
 
     CHECK_STATE m_check_state; // 主状态机当前所处的状态
     METHOD m_method;           // 请求方法
