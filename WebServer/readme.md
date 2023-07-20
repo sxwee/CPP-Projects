@@ -88,9 +88,52 @@ make
 
 ## 功能展示
 
+下面的GIF展示了**注册与登录、查看图片、查看视频、修改密码**等功能：
 
+![display](/images/display.gif)
 
 ## 压测展示
+
+WebBench是一款HTTP服务器压测工具
+
+```shell
+wget http://home.tiscali.cz/~cz210552/distfiles/webbench-1.5.tar.gz
+tar zxvf webbench-1.5.tar.gz
+cd webbench-1.5
+make install
+```
+
+在关闭日志后，使用WebBench对服务器进行压力测试，对listenfd和connfd分别采用ET和LT模式，均可实现上万的并发连接。
+
+```shell
+####Proactor模式
+./server -c 1 -a 0 -m 0 # LT + LT
+./server -c 1 -a 0 -m 0 # LT + ET
+./server -c 1 -a 0 -m 0 # ET + LT
+./server -c 1 -a 0 -m 0 # ET + ET
+
+####Reactor模式
+./server -c 1 -a 1 -m 0 # LT + LT
+./server -c 1 -a 1 -m 0 # LT + ET
+./server -c 1 -a 1 -m 0 # ET + LT
+./server -c 1 -a 1 -m 0 # ET + ET
+
+# webbench测试命令
+webbench -c 10500 -t 5 http://172.31.18.178:9006/
+```
+
+测试结果为：
+
+| 模式               |      |      | 成功的请求数 |      |
+| ------------------ | ---- | ---- | ------------ | ---- |
+| `Proactor LT + LT` |      |      |              |      |
+| `Proactor LT + ET` |      |      |              |      |
+| `Proactor ET + LT` |      |      |              |      |
+| `Proactor ET + ET` |      |      |              |      |
+| `Reactor LT + LT`  |      |      |              |      |
+| `Reactor LT + ET`  |      |      |              |      |
+| `Reactor ET + LT`  |      |      |              |      |
+| `Reactor ET + ET`  |      |      |              |      |
 
 
 
