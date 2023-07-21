@@ -13,7 +13,7 @@
 
 ```shell
 OS: Ubuntu
-C++: 7.5.0
+GCC: 7.5.0 (要求c++11及yi)
 MySQL: 5.7.42
 ```
 
