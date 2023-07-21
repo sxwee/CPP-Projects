@@ -150,6 +150,7 @@ public:
             return false;
         }
 
+        // 将新增数据放在循环数组的对应位置
         m_back = (m_back + 1) % m_max_size;
         m_array[m_back] = item;
 

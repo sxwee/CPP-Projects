@@ -39,10 +39,11 @@ bool log::init(const char *file_name, int close_log, int log_buf_size, int split
     struct tm *sys_tm = localtime(&t);
     struct tm my_tm = *sys_tm;
 
-    // 在一个字符串中从后往前查找指定字符的最后一次出现位置
+    // 从后往前找到第一个/的位置
     const char *p = strrchr(file_name, '/');
     char log_full_name[256] = {0};
 
+    // 若输入的文件名没有/，则直接将时间+文件名作为日志名
     if (p == NULL)
     {
         snprintf(log_full_name, 255, "%d_%02d_%02d_%s", my_tm.tm_year + 1900, my_tm.tm_mon + 1, my_tm.tm_mday, file_name);
@@ -95,7 +96,8 @@ void log::write_log(int level, const char *format, ...)
     m_mutex.lock();
     m_count++;
 
-    if (m_today != my_tm.tm_mday || m_count % m_split_lines == 0) // everyday log
+    // 日志不是今天或写入的日志行数是最大行的倍数
+    if (m_today != my_tm.tm_mday || m_count % m_split_lines == 0)
     {
 
         char new_log[256] = {0};
@@ -113,6 +115,7 @@ void log::write_log(int level, const char *format, ...)
         }
         else
         {
+            // 超过了最大行，在之前的日志名基础上加后缀, m_count/m_split_lines
             snprintf(new_log, 255, "%s%s%s.%lld", dir_name, tail, log_name, m_count / m_split_lines);
         }
         m_fp = fopen(new_log, "a");
@@ -137,7 +140,7 @@ void log::write_log(int level, const char *format, ...)
     log_str = m_buf;
 
     m_mutex.unlock();
-
+    // 若异步, 则将日志信息加入阻塞队列, 同步则加锁向文件中写
     if (m_is_async && !m_log_queue->full())
     {
         m_log_queue->push(log_str);
