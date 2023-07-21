@@ -58,7 +58,7 @@ private:
     int m_log_write;        // 日志写入方式
     int m_close_log;        // 是否关闭日志
     int m_actor_mode;       // 并发模型选择 0: proactor 1: reactor
-    int m_pipefd[2];        // ???
+    int m_pipefd[2];        // 用于客户端向主线程传递错误号
     int m_epollfd;          // epoll监听文件描述符
     httpConn *users;        // HTTP连接数
 

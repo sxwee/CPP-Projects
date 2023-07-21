@@ -175,9 +175,8 @@ void httpConn::init()
 }
 
 /**
- * 从状态机，用于分析出一行内容
+ * 从状态机, 用于分析出一行内容, 每行都以\r\n结尾
  * 返回值为行的读取状态，有LINE_OK,LINE_BAD,LINE_OPEN
- * 每行都已\r\n结尾
  */
 httpConn::LINE_STATUS httpConn::parse_line()
 {
@@ -652,7 +651,7 @@ bool httpConn::write()
 
     while (1)
     {
-        // 将数据从多个缓冲区一次性写入
+        // 将数据从多个缓冲区写入, 包括状态行、响应头（内存）和响应体（文件）
         // writev函数成功时返回已写入的字节数，失败时返回-1
         // iovec是一个结构体，指针成员iov_base指向一个缓冲区，存放的是writev将要发送的数据
         // 成员iov_len表示实际写入的长度
@@ -679,6 +678,7 @@ bool httpConn::write()
         {
             // 不再继续发送头部信息
             m_iv[0].iov_len = 0;
+            // bytes_have_send - m_write_idx可以定位到文件已经发送完的最后一个字节的位置
             m_iv[1].iov_base = m_file_address + (bytes_have_send - m_write_idx);
             m_iv[1].iov_len = bytes_to_send;
         }
@@ -835,6 +835,7 @@ bool httpConn::process_write(HTTP_CODE ret)
             m_iv[1].iov_base = m_file_address;
             m_iv[1].iov_len = m_file_stat.st_size;
             m_iv_count = 2;
+            // 要发送的字节数为缓冲区的状态行+响应头+文件大小
             bytes_to_send = m_write_idx + m_file_stat.st_size;
             return true;
         }
@@ -858,7 +859,7 @@ bool httpConn::process_write(HTTP_CODE ret)
 }
 
 /**
- * 由线程池中的工作线程调用，处理HTTP请求的入口函数
+ * 由线程池中的工作线程调用, 处理HTTP请求的入口函数
  */
 void httpConn::process()
 {

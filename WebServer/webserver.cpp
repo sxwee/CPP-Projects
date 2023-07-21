@@ -194,11 +194,14 @@ void WebServer::set_event_listen()
     // 设置每隔一段时间发送一个SIGALRM信号
     alarm(TIMESLOT);
 
-    // 工具类,信号和描述符基础操作
+    // 工具类、信号和描述符基础操作
     Utils::u_pipefd = m_pipefd;
     Utils::u_epollfd = m_epollfd;
 }
 
+/**
+ * 客户端请求监听与处理函数
+*/
 void WebServer::set_event_loop()
 {
     bool timeout = false;
@@ -206,6 +209,7 @@ void WebServer::set_event_loop()
 
     while (!stop_server)
     {
+        // 等待所监控文件描述符上有事件的产生
         int number = epoll_wait(m_epollfd, events, MAX_EVENT_NUMBER, -1);
         if (number < 0 && errno != EINTR)
         {
@@ -233,18 +237,19 @@ void WebServer::set_event_loop()
                 util_timer *timer = users_timer[sockfd].timer;
                 deal_timer(timer, sockfd);
             }
-            // 处理信号
+            // 处理客户端发送的信号
             else if ((sockfd == m_pipefd[0]) && (events[i].events & EPOLLIN))
             {
                 bool flag = deal_with_signal(timeout, stop_server);
                 if (flag == false)
                     LOG_ERROR("%s", "dealclientdata failure");
             }
-            // 处理客户连接上接收到的数据
+            // 处理客户端上接受到的数据
             else if (events[i].events & EPOLLIN)
             {
                 deal_with_read(sockfd);
             }
+            // 处理要发送给客户端的写请求
             else if (events[i].events & EPOLLOUT)
             {
                 deal_with_write(sockfd);
@@ -399,7 +404,7 @@ void WebServer::deal_with_read(int sockfd)
             adjust_timer(timer);
         }
 
-        // 若监测到读事件，将该事件放入请求队列
+        // 将任务放至请求队列
         m_event_pool->append(users + sockfd, 0);
 
         while (true)
@@ -419,11 +424,12 @@ void WebServer::deal_with_read(int sockfd)
     else
     {
         // proactor
+        // 在主线程中完成数据的读取
         if (users[sockfd].read_once())
         {
             LOG_INFO("deal with the client(%s)", inet_ntoa(users[sockfd].get_address()->sin_addr));
 
-            // 若监测到读事件，将该事件放入请求队列
+            // 将任务放入请求队列
             m_event_pool->append_p(users + sockfd);
 
             if (timer)

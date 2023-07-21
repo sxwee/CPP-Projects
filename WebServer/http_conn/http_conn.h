@@ -123,7 +123,7 @@ private:
     HTTP_CODE process_read();          // 解析HTTP请求
     bool process_write(HTTP_CODE ret); // 填充HTTP应答
 
-    // 下面这一组函数被process_read调用以分析HTTP请求
+    // 被process_read调用以分析HTTP请求的函数组
     HTTP_CODE parse_request_line(char *text);
     HTTP_CODE parse_headers(char *text);
     HTTP_CODE parse_content(char *text);
@@ -131,7 +131,7 @@ private:
     char *get_line() { return m_read_buf + m_start_line; };
     LINE_STATUS parse_line();
 
-    // 这一组函数被process_write调用以填充HTTP应答
+    // 被process_write调用以完成HTTP应答的函数组
     void unmap();
     bool add_response(const char *format, ...);
     bool add_content(const char *content);
@@ -143,10 +143,10 @@ private:
     bool add_blank_line();
 
 public:
-    static int m_epollfd;                         // 所有socket上的事件都被注册到同一个epoll内核事件中，所以设置成静态的
+    static int m_epollfd;                         // 所有socket上的事件都被注册到同一个epoll内核事件中，全局共享
     static int m_user_count;                      // 统计用户的数量
     static unordered_map<string, string> m_users; // <用户名, 密码>
-    static string cur_user_name;                         // 当前登录的用户名
+    static string cur_user_name;                  // 记录当前登录的用户名
     MYSQL *mysql;                                 // MySQL连接
     int m_state;                                  // 读为0, 写为1
 
@@ -176,7 +176,7 @@ private:
     struct iovec m_iv[2];    // 采用writev来执行写操作
     int m_iv_count;          // 被写内存块的数量
 
-    int cgi;             // 是否启用的POST
+    int cgi;             // 是否启用POST
     char *m_string;      // 存储请求头数据
     int bytes_to_send;   // 将要发送的数据的字节数
     int bytes_have_send; // 已经发送的字节数
