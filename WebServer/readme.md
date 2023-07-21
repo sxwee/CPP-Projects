@@ -89,7 +89,7 @@ make
 
 下面的GIF展示了**注册与登录、查看图片、查看视频、修改密码**等功能：
 
-
+<p align="center"><img src="./images/demo.gif"></p>
 
 ## 压测展示
 
@@ -133,8 +133,3 @@ webbench -c 10500 -t 5 http://172.31.18.178:9006/
 | `Reactor LT + ET`  |      |      |              |      |
 | `Reactor ET + LT`  |      |      |              |      |
 | `Reactor ET + ET`  |      |      |              |      |
-
-
-
-# 参考
-
