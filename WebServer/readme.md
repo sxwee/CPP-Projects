@@ -29,7 +29,6 @@ MySQL: 5.7.42
 - [定时器处理非活动连接](./timer/readme.md)
 - [同步/异步日志系统](./log/readme.md)
 - [数据库连接池](./db/readme.md)
-- [HTTP压力测试](./webbench/readme.md)
 
 
 
@@ -90,7 +89,7 @@ make
 
 下面的GIF展示了**注册与登录、查看图片、查看视频、修改密码**等功能：
 
-![display](/images/display.gif)
+
 
 ## 压测展示
 
