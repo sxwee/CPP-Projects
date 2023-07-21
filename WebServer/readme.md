@@ -17,9 +17,9 @@ GCC: 7.5.0 (要求c++11及yi)
 MySQL: 5.7.42
 ```
 
-**项目框架**：
+**项目大致框架如下**：
 
-
+<p align="center"><img src="./images/webserver_framework.png"></p>
 
 **项目各模块详解**：
 
