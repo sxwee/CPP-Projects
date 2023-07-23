@@ -2,10 +2,11 @@
 
 本项目实现了一个Linux下的C++轻量级Web服务器，在该服务器中：
 
-- 使用 **线程池 + 非阻塞`socket` + `epoll`(ET和LT均实现) + 事件处理(Reactor和模拟Proactor均实现)** 的并发模型
-- 使用**状态机**解析HTTP请求报文，支持`GET`和`POST`请求。
-- 接入MySQL数据库，使得能实现Web端用户的**注册、登录、修改密码**等功能，此外，还可以向该服务器**请求图片/视频文件**。
-- 还实现了**同步/异步**日志系统，记录服务器运行状态。
+- 使用I/O多路复用技术**`EPOLL`与线程池**实现多线程的**Reactor/Proactor (模拟)**高并发模型。
+- 使用**状态机**解析HTTP请求报文，支持`GET`和`POST`请求的处理。
+- 基于**升序双向链表**实现的连接定时器，用以关闭非活跃连接。
+- 接入**MySQL数据库**，能实现Web端用户的注册、登录和密码修改。
+- 利用**单例模式**和**阻塞队列**实现了**同步/异步**日志系统，记录服务器的运行状态。
 
 # 项目详情
 
@@ -91,45 +92,4 @@ make
 
 <p align="center"><img src="./images/demo.gif"></p>
 
-## 压测展示
-
-WebBench是一款HTTP服务器压测工具
-
-```shell
-wget http://home.tiscali.cz/~cz210552/distfiles/webbench-1.5.tar.gz
-tar zxvf webbench-1.5.tar.gz
-cd webbench-1.5
-make install
-```
-
-在**关闭日志**后，使用WebBench对服务器进行压力测试，对`listenfd`和`connfd`分别采用ET和LT模式，均可实现上万的并发连接。
-
-```shell
-####Proactor模式
-./server -c 1 -a 0 -m 0 # LT + LT
-./server -c 1 -a 0 -m 0 # LT + ET
-./server -c 1 -a 0 -m 0 # ET + LT
-./server -c 1 -a 0 -m 0 # ET + ET
-
-####Reactor模式
-./server -c 1 -a 1 -m 0 # LT + LT
-./server -c 1 -a 1 -m 0 # LT + ET
-./server -c 1 -a 1 -m 0 # ET + LT
-./server -c 1 -a 1 -m 0 # ET + ET
-
-# webbench测试命令
-webbench -c 10500 -t 5 http://172.31.18.178:9006/
-```
-
-测试结果为：
-
-| 模式               |      |      |      |      |
-| ------------------ | ---- | ---- | ---- | ---- |
-| `Proactor LT + LT` |      |      |      |      |
-| `Proactor LT + ET` |      |      |      |      |
-| `Proactor ET + LT` |      |      |      |      |
-| `Proactor ET + ET` |      |      |      |      |
-| `Reactor LT + LT`  |      |      |      |      |
-| `Reactor LT + ET`  |      |      |      |      |
-| `Reactor ET + LT`  |      |      |      |      |
-| `Reactor ET + ET`  |      |      |      |      |
+## 
