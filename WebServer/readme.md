@@ -13,7 +13,7 @@
 
 ```shell
 OS: Ubuntu
-GCC: 7.5.0 (要求c++11及yi)
+GCC: 7.5.0 (要求c++11及以上)
 MySQL: 5.7.42
 ```
 
@@ -102,7 +102,7 @@ cd webbench-1.5
 make install
 ```
 
-在关闭日志后，使用WebBench对服务器进行压力测试，对listenfd和connfd分别采用ET和LT模式，均可实现上万的并发连接。
+在**关闭日志**后，使用WebBench对服务器进行压力测试，对`listenfd`和`connfd`分别采用ET和LT模式，均可实现上万的并发连接。
 
 ```shell
 ####Proactor模式
@@ -123,13 +123,13 @@ webbench -c 10500 -t 5 http://172.31.18.178:9006/
 
 测试结果为：
 
-| 模式               |      |      | 成功的请求数 |      |
-| ------------------ | ---- | ---- | ------------ | ---- |
-| `Proactor LT + LT` |      |      |              |      |
-| `Proactor LT + ET` |      |      |              |      |
-| `Proactor ET + LT` |      |      |              |      |
-| `Proactor ET + ET` |      |      |              |      |
-| `Reactor LT + LT`  |      |      |              |      |
-| `Reactor LT + ET`  |      |      |              |      |
-| `Reactor ET + LT`  |      |      |              |      |
-| `Reactor ET + ET`  |      |      |              |      |
+| 模式               |      |      |      |      |
+| ------------------ | ---- | ---- | ---- | ---- |
+| `Proactor LT + LT` |      |      |      |      |
+| `Proactor LT + ET` |      |      |      |      |
+| `Proactor ET + LT` |      |      |      |      |
+| `Proactor ET + ET` |      |      |      |      |
+| `Reactor LT + LT`  |      |      |      |      |
+| `Reactor LT + ET`  |      |      |      |      |
+| `Reactor ET + LT`  |      |      |      |      |
+| `Reactor ET + ET`  |      |      |      |      |
