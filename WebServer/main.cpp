@@ -3,9 +3,9 @@
 int main(int argc, char *argv[])
 {
     // 需要修改的数据库信息,登录名,密码,库名
-    string user = "root";
-    string passwd = "Bjtu@123456";
-    string databasename = "web_service";
+    string user = "your_user_name";
+    string passwd = "your_password";
+    string databasename = "your_db_name";
 
     // 命令行解析
     Config config;
